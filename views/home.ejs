@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Short your urls</title>
+    <style>
+        body{
+            background-color: rgb(254, 254, 254);
+            color:rgb(173, 46, 211);
+            font-family: 20px;
+        }
+        input{
+            width:50%;
+            border-radius: 5px;
+            border-color: rgb(255, 240, 240);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.283);
+            padding: 8px;
+           
+            font-family: sans-serif;
+        }
+        .gen{
+            
+            padding: 8px;
+            border-radius: 5px;
+            border-color: rgb(255, 235, 235);
+            background-color: rgb(131, 21, 234);
+            color:whitesmoke;
+
+        }
+        p{
+           
+            font-family: sans-serif;
+            color: blueviolet;
+        }
+        
+    </style>
+
+    
+</head>
+<body>
+    <!--with the help of ejs template its easy to render page on server -->
+
+
+ 
+     <h1 style="text-align:center;">URL's shortner </h1>
+    
+     <div style=text-align:center>
+        <form method="POST" action="/url" >
+          <label>Enter Your Original URL</label> 
+          <input type="text" name="url" placeholder="http://example.com" > 
+          <button type="submit" class="gen">Generate</button> 
+        </form>
+     </div>
+     <% if(locals.id){ %>
+        <p style=text-align:center >URL Generated: http://localhost:8001/url/<%= id %></p>
+     <% } %>
+     <div style="text-align:center;  margin-top:10px; padding:20px;" >
+        <% if(locals.urls) { %>
+            <table style="border:solid; width: 100%;">
+                <thread >
+                    <th style="border:solid;">S.No</th>
+                    <th style="border:solid;">ShortID</th>
+                    <th style="border:solid;">Redirect URLs</th>
+                    <th style="border:solid;">Clicks</th>
+                </thread>
+                <tbody style="border:solid;">
+                    <% urls.forEach((url,index) => { %>
+                        <tr style="border:solid 1px;">
+                        <td style="border:solid 1px;"><%= index + 1 %> </td>
+                        <td style="border:solid 1px;"><%= url.shortId %></td>
+                        <td style="border:solid 1px;"><%= url.redirectURL %></td>
+                        <td style="border:solid 1px;"><%= url.visitHistory.length %></td>
+                    </tr>
+                   <% }) %>
+                </tbody>
+            </table>
+       <% } %>
+     </div>
+   
+    
+</body>
+</html>
