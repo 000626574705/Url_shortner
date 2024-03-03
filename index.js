@@ -1,12 +1,14 @@
 const express=require("express");
-const path=require('path')
+const path=require('path');
+const cookieParser=require("cookie-parser");
 const { connectToMongoDB } = require("./connect");
-
+const {restrictToLoggedinUserOnly,checkAuth}=require("./middlewares/auth");
 const URL =require('./models/url');
 const urlRoute= require('./routes/url');
 const staticRouter = require('./routes/staticRouter');
 const {request} =require("http");
 const userRouter=require('./routes/user');
+
 
 
 
@@ -21,6 +23,7 @@ connectToMongoDB("mongodb://0.0.0.0:27017/short-url")
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+app.use(cookieParser());
 app.get("/test",async(req,res) =>{
     const allUrls=await URL.find({});
     return res.render("home",{
@@ -28,9 +31,9 @@ app.get("/test",async(req,res) =>{
     });
 });
 
-app.use("/url",urlRoute);
+app.use("/url",restrictToLoggedinUserOnly,urlRoute);
 app.use("/user",userRouter);
-app.use("/",staticRouter);
+app.use("/",checkAuth,staticRouter);
 
 
 app.get('/url/:shortId',async(req,res) =>{
