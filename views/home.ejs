@@ -7,33 +7,63 @@
     <title>Short your urls</title>
     <style>
         body{
-            background-color: rgb(254, 254, 254);
-            color:rgb(173, 46, 211);
+            background-color: white;
+            color:#00246b;
             font-family: 20px;
         }
         input{
             width:50%;
             border-radius: 5px;
             border-color: rgb(255, 240, 240);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.283);
+            box-shadow: 0 0 10px rgba(230, 229, 229, 0.826);
             padding: 8px;
-           
             font-family: sans-serif;
+            font-size: 20px;
+            
         }
         .gen{
-            
+            font-size: 20px;
             padding: 8px;
             border-radius: 5px;
-            border-color: rgb(255, 235, 235);
-            background-color: rgb(131, 21, 234);
-            color:whitesmoke;
+            border-color: rgb(203, 201, 201);
+            background-color:#00246b;
+            color:rgb(255, 255, 255);
 
         }
         p{
            
             font-family: sans-serif;
-            color: blueviolet;
+            color: #091c40;
         }
+        .headerline{
+            
+            padding-left: 45px;
+            font-size:35px;
+            font-weight: 800;
+            align-items: center;
+
+        }
+        .searchbr{
+            padding-left: 45px;
+        }
+        .labeln{
+            font-size: 20px;
+            font-weight: 400;
+        }
+        .webnam{
+            text-decoration:underline;
+            font-size: 40px;
+        }
+        .output{
+            cursor: pointer;
+            text-decoration: underline;
+            text-align: center;
+            color: crimson;
+            font-size: 25px;
+            padding-top: 12px;
+            font-weight: 500;
+        }
+       
         
     </style>
 
@@ -43,20 +73,21 @@
     <!--with the help of ejs template its easy to render page on server -->
 
 
- 
-     <h1 style="text-align:center;">URL's shortner </h1>
-    
-     <div style=text-align:center>
+      <div>
+     <h1 style="text-align:center;" class="webnam">URL shortner </h1>
+    <p class="headerline">Streamline Your Links with Our Efficient<br> URL Shortener Service</p>
+    </div>
+     <div style=text-align:flex-start class="searchbr">
         <form method="POST" action="/url" >
-          <label>Enter Your Original URL</label> 
+          <label class="labeln">Enter Your Original URL</label> 
           <input type="text" name="url" placeholder="http://example.com" > 
           <button type="submit" class="gen">Generate</button> 
         </form>
      </div>
      <% if(locals.id){ %>
-        <p style=text-align:center >URL Generated: http://localhost:8001/url/<%= id %></p>
+        <p style=text-align:center>URL Generated: <a href="http://localhost:8001/url/<%= id %>"class="output">http://localhost:8001/url/<%= id %></a></p>
      <% } %>
-     <div style="text-align:center;  margin-top:10px; padding:20px;" >
+     <div style="text-align:center;  margin-top:10px; padding:25px 45px; " >
         <% if(locals.urls) { %>
             <table style="border:solid; width: 100%;">
                 <thread >
