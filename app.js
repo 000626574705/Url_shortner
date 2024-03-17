@@ -1,4 +1,6 @@
+require("dotenv").config();
 const express=require("express");
+const mongoose=require("mongoose");
 const path=require('path');
 const cookieParser=require("cookie-parser");
 const { connectToMongoDB } = require("./connect");
@@ -12,14 +14,18 @@ const userRouter=require('./routes/user');
 
 
 
+
 const app=express();
 app.set("view engine","ejs");  //we tell our appication that which engine we are going to use
 app.set("views",path.resolve("./views")); //we mention path where all ejs files 
 
 
-const PORT=8001;
-connectToMongoDB("mongodb://0.0.0.0:27017/short-url")
-.then(()=> console.log('Mongodb connected'));
+const PORT=process.env.PORT|| 8000;
+const uri = process.env.MONGO_URL;
+
+mongoose
+ .connect(uri)
+ .then(()=> console.log('Mongodb connected'));
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
